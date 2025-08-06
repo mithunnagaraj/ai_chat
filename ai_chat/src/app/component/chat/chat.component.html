@@ -1,0 +1,40 @@
+<div class="chat-container">
+    <div class="messages">
+      <div class="ai-message">
+        <p>{{ aiResponse }}</p>
+  
+        <!-- File Previews -->
+        <div *ngFor="let file of files" class="file-preview">
+          <!-- PDF -->
+          <div *ngIf="file.type === 'pdf'">
+            <embed [src]="file.url" type="application/pdf" width="300" height="200" />
+            <a [href]="file.url" target="_blank">{{file.name}}</a>
+          </div>
+  
+          <!-- Image -->
+          <div *ngIf="file.type.startsWith('image')">
+            <img [src]="file.url" alt="Preview" width="300" />
+          </div>
+  
+          <!-- Video -->
+          <div *ngIf="file.type.startsWith('video')">
+            <video controls width="300">
+              <source [src]="file.url" [type]="file.type">
+            </video>
+          </div>
+  
+          <!-- Text -->
+          <div *ngIf="file.type === 'text'">
+            <iframe [src]="file.url" width="300" height="150"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Input -->
+    <div class="input-container">
+      <input [(ngModel)]="userInput" placeholder="Ask something..." />
+      <button (click)="sendMessage()">Send</button>
+    </div>
+  </div>
+  
